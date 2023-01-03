@@ -1,6 +1,7 @@
+import { Button } from "@chakra-ui/react";
 import { useEffect } from "react";
 import useSocket from "./hooks/useSocket";
-
+import axios from "axios";
 function App() {
   const socket = useSocket("http://localhost:8000");
 
@@ -18,7 +19,18 @@ function App() {
       });
     }
   }, [socket]);
-  return <div className="App"></div>;
+
+  return (
+    <div className="App">
+      <Button
+        onClick={(e) => {
+          socket?.emit("setUniqueId", "@tikhebairagi12sth");
+        }}
+      >
+        Show Demo
+      </Button>
+    </div>
+  );
 }
 
 export default App;
