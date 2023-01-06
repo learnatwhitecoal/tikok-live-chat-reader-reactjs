@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
     socket.handshake.headers["origin"] || socket.handshake.headers["referer"]
   );
 
+  //connecting to user live
   socket.on("setUniqueId", (uniqueId, options) => {
     // Prohibit the client from specifying these options (for security reasons)
     if (typeof options === "object" && options) {

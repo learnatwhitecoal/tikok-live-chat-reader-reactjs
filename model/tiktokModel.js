@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Gift = require("./giftModel");
+//create a model having fileds name
 
 const TiktokUserSchema = new mongoose.Schema({
   username: {

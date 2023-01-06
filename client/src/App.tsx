@@ -1,7 +1,11 @@
-import { Button } from "@chakra-ui/react";
 import { useEffect } from "react";
 import useSocket from "./hooks/useSocket";
-import axios from "axios";
+import { CustomNavbar as Navbar } from "./component/CustomNavbar";
+import Footer from "./component/Footer";
+import { Route, Routes } from "react-router-dom";
+import { Home } from "./Pages/Home";
+import { TiktokLiveChat } from "./Pages/TiktokLiveChat";
+import { Analytics } from "./Pages/Analytics";
 function App() {
   const socket = useSocket("http://localhost:8000");
 
@@ -22,13 +26,13 @@ function App() {
 
   return (
     <div className="App">
-      <Button
-        onClick={(e) => {
-          socket?.emit("setUniqueId", "@tikhebairagi12sth");
-        }}
-      >
-        Show Demo
-      </Button>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/live" element={<TiktokLiveChat />} />
+        <Route path="/analytics" element={<Analytics />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
