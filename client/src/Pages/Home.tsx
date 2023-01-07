@@ -8,7 +8,6 @@ export const Home = () => {
      <HeroSection/>
       <ClientSays/>
       <StatisticsHome/>
-    
     </>
   )
 }

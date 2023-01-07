@@ -25,7 +25,7 @@ function App() {
   }, [socket]);
 
   return (
-    <div className="App">
+    <div className="main-app font-primary">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

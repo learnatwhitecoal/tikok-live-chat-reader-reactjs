@@ -28,7 +28,7 @@ const DynamicLinks: NavLinkRoutes[] = [
   },
   {
     routeName: "Tiktok Analytics",
-    link: "/analyitcs",
+    link: "/analytics",
   },
 ];
 

@@ -1,7 +1,9 @@
-import React from 'react'
+import { CommonLayout } from "../layouts/CommonLayout"
 
 export const Analytics = () => {
   return (
-    <div>Analytics</div>
+   <CommonLayout pageName="analytics">
+    
+   </CommonLayout>
   )
 }
