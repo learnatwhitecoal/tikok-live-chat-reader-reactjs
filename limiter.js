@@ -10,7 +10,7 @@ setInterval(() => {
 function clientBlocked(io, currentSocket) {
   let ipCounts = getOverallIpConnectionCounts(io);
   let currentIp = getSocketIp(currentSocket);
-
+  console.log(currentIp)
   if (typeof currentIp !== "string") {
     console.info("LIMITER: Failed to retrieve socket IP.");
     return false;

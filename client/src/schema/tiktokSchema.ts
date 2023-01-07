@@ -8,7 +8,7 @@ export const tikokLiveSchema = Yup.object().shape({
       "TikTok username can only contain letters, numbers, and underscores"
     )
     .required("TikTok username is required"),
-  options: Yup.array()
-    .of(Yup.string().oneOf(["like", "comment", "share", "live", "gift"]).min(1))
-    .min(1, "must choose one"),
+  //options: Yup.array()
+  //  .of(Yup.string().oneOf(["like", "comment", "share", "live", "gift"]).min(1))
+  //  .min(1, "must choose one"),
 });

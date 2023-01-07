@@ -14,21 +14,27 @@ import {
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
+import { IoMdAnalytics } from "react-icons/io";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLinkRoutes } from "../constants/common";
+import { CiStreamOn } from "react-icons/ci";
+import { MdOutlineHomeMax } from "react-icons/md";
 
 const DynamicLinks: NavLinkRoutes[] = [
   {
     routeName: "Home",
     link: "/",
+    icon: <MdOutlineHomeMax size={25} />,
   },
   {
     routeName: "Tiktok Live Chat",
     link: "/live",
+    icon: <CiStreamOn size={25} />,
   },
   {
     routeName: "Tiktok Analytics",
     link: "/analytics",
+    icon: <IoMdAnalytics size={25} />,
   },
 ];
 
@@ -36,12 +42,15 @@ interface NavLinkProps {
   data: NavLinkRoutes;
 }
 const AppLink = ({ data }: NavLinkProps) => (
-  <Address
-    className="text-lg font-bold hover:bg-none no-underline hover:underline"
-    to={data?.link}
-  >
-    {data?.routeName}
-  </Address>
+  <div className="flex items-center gap-1">
+    {data?.icon && data?.icon}
+    <Address
+      className="text-lg font-bold hover:bg-none no-underline hover:underline"
+      to={data?.link}
+    >
+      {data?.routeName}
+    </Address>
+  </div>
 );
 
 export const CustomNavbar = () => {
@@ -49,7 +58,7 @@ export const CustomNavbar = () => {
 
   return (
     <>
-      <Box px={4}>
+      <Box px={4} className="shadow-md">
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -76,7 +85,7 @@ export const CustomNavbar = () => {
               ))}
             </HStack>
           </HStack>
-          <Flex alignItems={"center"}>
+          {/*<Flex alignItems={"center"}>
             <Menu>
               <MenuButton
                 as={Button}
@@ -99,7 +108,7 @@ export const CustomNavbar = () => {
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
             </Menu>
-          </Flex>
+          </Flex>*/}
         </Flex>
 
         {isOpen ? (

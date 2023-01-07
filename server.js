@@ -136,27 +136,27 @@ io.on("connection", (socket) => {
 
     //Here,giftList is array of GiftListDto . View types folder
 
-    tiktokConnectionWrapper.connection
-      .getAvailableGifts()
-      .then((giftList) => {
-        giftList.forEach((gift) => {
-          console.log(
-            `id: ${gift.id}, name: ${gift.name}, cost: ${gift.diamond_count}`
-          );
+    //tiktokConnectionWrapper.connection
+    //  .getAvailableGifts()
+    //  .then((giftList) => {
+    //    giftList.forEach((gift) => {
+    //      console.log(
+    //        `id: ${gift.id}, name: ${gift.name}, cost: ${gift.diamond_count}`
+    //      );
 
-          socket.emit("giftInfo", {
-            name: gift.name,
-            diamond: gift.diamond_count,
-          });
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    //      socket.emit("giftInfo", {
+    //        name: gift.name,
+    //        diamond: gift.diamond_count,
+    //      });
+    //    });
+    //  })
+    //  .catch((err) => {
+    //    console.error(err);
+    //  });
   });
 
   socket.on("disconnect", () => {
-    if (tiktokConnectionWrapper) {
+    if (tiktokConnectionWrapper) {  
       tiktokConnectionWrapper.disconnect();
     }
   });
