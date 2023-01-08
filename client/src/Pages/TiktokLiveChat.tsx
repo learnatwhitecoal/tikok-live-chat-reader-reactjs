@@ -11,23 +11,24 @@ import {
 import { InputGroup } from "../component/common/InputGroup";
 import { CheckBoxGroup } from "../component/common/CheckBoxGroup";
 import { CiStreamOn } from "react-icons/ci";
-import { toast } from "react-toastify";
 import { useSocketStore } from "../store/store";
 import { useEffect, useState } from "react";
+import { ChatResponse } from "../constants/chat";
 export const TiktokLiveChat = () => {
   const { socket } = useSocketStore((state) => state);
   const [waitMsg, setWaitMsg] = useState("");
+  const [chatUser,setChatUser] = useState<ChatResponse[]>([])
   useEffect(() => {
     socket?.on("tiktokDisconnected", (msg) => {
       setWaitMsg(msg)
       //toast.error(msg);
     });
-    socket?.on("connected", (msg) => {
-      toast.success(msg);
-    });
-    socket?.on("chat", (user) => {
+    //socket?.on("tiktokConnected", (msg) => {
+    //  toast.success(msg);
+    //});
+    socket?.on("chat", (chatResponse:ChatResponse) => {
       setWaitMsg("");
-      console.log(user);
+      setChatUser((prevMessages) => [...prevMessages, chatResponse]);
     });
     socket?.on("socketInfo", (msg) => {
       setWaitMsg(msg);
@@ -78,6 +79,18 @@ export const TiktokLiveChat = () => {
             </Form>
           )}
         </Formik>
+      </div>
+      <div className="chat-user w-full h-[40rem] overflow-y-scroll overflow-x-hidden flex">
+        <div className="chats flex-1">
+        {chatUser.map((res,index)=>{
+          return(<p key={index}>{res?.uniqueId}</p>)
+        })}
+        </div>
+        <div className="gifters flex-1">
+        {chatUser.map((res,index)=>{
+          return(<p key={index}>{res?.uniqueId}</p>)
+        })}
+        </div>
       </div>
     </CommonLayout>
   );
