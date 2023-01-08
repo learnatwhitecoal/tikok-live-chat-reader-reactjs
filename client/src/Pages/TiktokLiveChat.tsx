@@ -12,12 +12,22 @@ import { InputGroup } from "../component/common/InputGroup";
 import { CheckBoxGroup } from "../component/common/CheckBoxGroup";
 import { CiStreamOn } from "react-icons/ci";
 import { useSocketStore } from "../store/store";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatResponse } from "../constants/chat";
+import { ChatUser } from "../component/users/ChatUser";
 export const TiktokLiveChat = () => {
   const { socket } = useSocketStore((state) => state);
+  const messageEl = useRef<any>(null);
   const [waitMsg, setWaitMsg] = useState("");
   const [chatUser,setChatUser] = useState<ChatResponse[]>([])
+  useEffect(() => {
+    if (messageEl.current) {
+      messageEl.current.addEventListener('DOMNodeInserted', (event:any) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
+  }, [])
   useEffect(() => {
     socket?.on("tiktokDisconnected", (msg) => {
       setWaitMsg(msg)
@@ -28,7 +38,12 @@ export const TiktokLiveChat = () => {
     //});
     socket?.on("chat", (chatResponse:ChatResponse) => {
       setWaitMsg("");
-      setChatUser((prevMessages) => [...prevMessages, chatResponse]);
+      const generateDummyMessage = () => {
+        setInterval(() => {
+          setChatUser((prevMessages) => [...prevMessages, chatResponse]);
+        }, 2000);
+      }
+      generateDummyMessage();
     });
     socket?.on("socketInfo", (msg) => {
       setWaitMsg(msg);
@@ -80,16 +95,14 @@ export const TiktokLiveChat = () => {
           )}
         </Formik>
       </div>
-      <div className="chat-user w-full h-[40rem] overflow-y-scroll overflow-x-hidden flex">
+      <div className="chat-user w-full h-[40rem] overflow-y-scroll overflow-x-hidden flex" ref={messageEl}>
         <div className="chats flex-1">
         {chatUser.map((res,index)=>{
-          return(<p key={index}>{res?.uniqueId}</p>)
+          return(<ChatUser key={index} chatResponse={res}/>)
         })}
         </div>
         <div className="gifters flex-1">
-        {chatUser.map((res,index)=>{
-          return(<p key={index}>{res?.uniqueId}</p>)
-        })}
+    
         </div>
       </div>
     </CommonLayout>
