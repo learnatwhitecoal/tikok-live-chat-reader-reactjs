@@ -1,5 +1,5 @@
 require("dotenv").config();
-const connectDB = require("../config/database");
+const connectDB = require("./config/database");
 const express = require("express");
 const path = require("path");
 var cors = require("cors");
@@ -9,8 +9,8 @@ const { Server } = require("socket.io");
 const {
   TikTokConnectionWrapper,
   getGlobalConnectionCount,
-} = require("../connectionWrapper");
-const { clientBlocked } = require("../limiter");
+} = require("./connectionWrapper");
+const { clientBlocked } = require("./limiter");
 
 //connectDB();
 const app = express();
