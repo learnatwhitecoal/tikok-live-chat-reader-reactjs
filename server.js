@@ -185,7 +185,9 @@ if (process.env.NODE_ENV === "development") {
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.get("/demo",(req,res)=>{
+  res.json({msg:"success"})
+})
 
 
 // Start http listener
