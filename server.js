@@ -13,7 +13,7 @@ const {
 const { clientBlocked } = require("./limiter");
 
 
-connectDB();
+//connectDB();
 const app = express();
 const httpServer = createServer(app); //use same app server instance to create httpServer for socket
 
