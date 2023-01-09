@@ -1,5 +1,5 @@
 require("dotenv").config();
-const connectDB = require("./config/database");
+const connectDB = require("../config/database");
 const express = require("express");
 const path = require("path");
 var cors = require("cors");
@@ -9,9 +9,8 @@ const { Server } = require("socket.io");
 const {
   TikTokConnectionWrapper,
   getGlobalConnectionCount,
-} = require("./connectionWrapper");
-const { clientBlocked } = require("./limiter");
-
+} = require("../connectionWrapper");
+const { clientBlocked } = require("../limiter");
 
 //connectDB();
 const app = express();
@@ -155,7 +154,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    if (tiktokConnectionWrapper) {  
+    if (tiktokConnectionWrapper) {
       tiktokConnectionWrapper.disconnect();
     }
   });
@@ -167,10 +166,10 @@ setInterval(() => {
 }, 5000);
 
 // Serve frontend files
-app.use("/static", express.static(path.join(__dirname, "/build/static")));
+app.use("/static", express.static(path.join(__dirname, "../build/static")));
 
-app.use("/", express.static(path.join(__dirname, "/build")));
-
+app.use("/", express.static(path.join(__dirname, "../build")));
+console.log(path.join(__dirname, "../build"))
 app.use(
   cors({
     origin: "*",
@@ -185,10 +184,9 @@ if (process.env.NODE_ENV === "development") {
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.get("/demo",(req,res)=>{
-  res.json({msg:"success"})
-})
-
+app.get("/demo", (req, res) => {
+  res.json({ msg: "success" });
+});
 
 // Start http listener
 const port = process.env.PORT || 8081;
