@@ -167,9 +167,9 @@ setInterval(() => {
 }, 5000);
 
 // Serve frontend files
-app.use("/static", express.static(path.join(__dirname, "/client/build/static")));
+app.use("/static", express.static(path.join(__dirname, "/build/static")));
 
-app.use("/", express.static(path.join(__dirname, "/client/build")));
+app.use("/", express.static(path.join(__dirname, "/build")));
 
 app.use(
   cors({
