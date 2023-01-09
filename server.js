@@ -11,8 +11,7 @@ const {
   getGlobalConnectionCount,
 } = require("./connectionWrapper");
 const { clientBlocked } = require("./limiter");
-const tiktokRouter = require("./routes/tiktokRoutes");
-const giftRouter = require("./routes/giftRouter");
+
 
 connectDB();
 const app = express();
@@ -168,7 +167,9 @@ setInterval(() => {
 }, 5000);
 
 // Serve frontend files
-//app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use("/static", express.static(path.join(__dirname, "/client/build/static")));
+
+app.use("/", express.static(path.join(__dirname, "/client/build")));
 
 app.use(
   cors({
@@ -185,11 +186,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-/* use this standard for creating routes 
-app.user('/api/which_api_you_are_going_to_create);
-*/
-app.use("/api/tiktok", tiktokRouter);
-app.use("/api/gift", giftRouter);
+
 
 // Start http listener
 const port = process.env.PORT || 8081;

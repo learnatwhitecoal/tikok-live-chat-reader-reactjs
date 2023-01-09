@@ -15,16 +15,32 @@ import { useSocketStore } from "../store/store";
 import { useEffect, useRef, useState } from "react";
 import { ChatResponse } from "../constants/chat";
 import { ChatUser } from "../component/users/ChatUser";
+import { GiftResponse } from "../constants/gift";
+import { GiftUser } from "../component/users/Gifter";
 export const TiktokLiveChat = () => {
   const { socket } = useSocketStore((state) => state);
-  const messageEl = useRef<any>(null);
+  const chatAnimationRef = useRef<any>(null);
+  const giftAnimationRef = useRef<any>(null);
+
   const [waitMsg, setWaitMsg] = useState("");
   const [chatUser,setChatUser] = useState<ChatResponse[]>([])
+  const [gifter,setGifterUser] = useState<GiftResponse[]>([])
+
+  const scrollDelay=(ms:number)=>{
+    return new Promise(res => setTimeout(res, ms));
+}
+
   useEffect(() => {
-    if (messageEl.current) {
-      messageEl.current.addEventListener('DOMNodeInserted', (event:any) => {
+    if (chatAnimationRef.current) {
+      chatAnimationRef.current.addEventListener('DOMNodeInserted', async (event:any) => {
         const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth'});
+      });
+    }
+    if (giftAnimationRef.current) {
+      giftAnimationRef.current.addEventListener('DOMNodeInserted', async (event:any) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth'});
       });
     }
   }, [])
@@ -39,11 +55,17 @@ export const TiktokLiveChat = () => {
     socket?.on("chat", (chatResponse:ChatResponse) => {
       setWaitMsg("");
       const generateDummyMessage = () => {
-        setInterval(() => {
+          
           setChatUser((prevMessages) => [...prevMessages, chatResponse]);
-        }, 2000);
       }
       generateDummyMessage();
+    });
+    socket?.on("gift", (giftResponse:GiftResponse) => {
+      setWaitMsg("");
+      const generateGifter = () => {
+          setGifterUser((prevMessages) => [...prevMessages, giftResponse]);
+      }
+      generateGifter();
     });
     socket?.on("socketInfo", (msg) => {
       setWaitMsg(msg);
@@ -95,14 +117,16 @@ export const TiktokLiveChat = () => {
           )}
         </Formik>
       </div>
-      <div className="chat-user w-full h-[40rem] overflow-y-scroll overflow-x-hidden flex" ref={messageEl}>
-        <div className="chats flex-1">
+      <div className="chat-user w-full h-[40rem] flex" >
+        <div className="chats flex-1  overflow-y-scroll overflow-x-hidden" ref={chatAnimationRef}>
         {chatUser.map((res,index)=>{
           return(<ChatUser key={index} chatResponse={res}/>)
         })}
         </div>
-        <div className="gifters flex-1">
-    
+        <div className="gifters flex-1  overflow-y-scroll overflow-x-hidden" ref={giftAnimationRef}>
+        {gifter.map((res,index)=>{
+          return(<GiftUser key={index} giftRespose={res}/>)
+        })}
         </div>
       </div>
     </CommonLayout>

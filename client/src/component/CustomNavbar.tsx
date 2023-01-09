@@ -31,11 +31,6 @@ const DynamicLinks: NavLinkRoutes[] = [
     link: "/live",
     icon: <CiStreamOn size={25} />,
   },
-  {
-    routeName: "Tiktok Analytics",
-    link: "/analytics",
-    icon: <IoMdAnalytics size={25} />,
-  },
 ];
 
 interface NavLinkProps {
